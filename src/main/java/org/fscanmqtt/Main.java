@@ -1,6 +1,7 @@
 package org.fscanmqtt;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -19,11 +20,8 @@ public class Main {
         ora abbiamo una stinga nel main contenente tutto il file json
         nella prossima implementazione questa stinga si otterrà con una iscrizione ad un topic mqtt sul broker
          */
-
-
-        String json = "{sensors:[{}]}";
-
-        String jsonInput = "{\"sensors\":" +
+        String json = "{\"classname\":\"ThermalPressure\",\"name\":\"airT\",\"CANID\":\"0x208\",\"byte_interval\":[ 4, 5 ],\"gain\":0.1,\"offset\":0,\"min\":1.0,\"max\":1.0}";
+        String jsonInput = "{ \"sensors\":" +
                 "    [" +
                 "    " +
                 "      {" +
@@ -208,7 +206,17 @@ public class Main {
 
         ObjectMapper mapper = new ObjectMapper();
         try{
-            List<Sensor> sensors = mapper.readValue(jsonInput, new TypeReference<List<Sensor>>(){});
+            //Sensor sensor = mapper.readValue(json, Sensor.class);
+            //System.out.println(sensor);
+            List<Sensor> sensors = mapper.readValue(json, new TypeReference<List<Sensor>>() { });
+            sensors = Arrays.asList(mapper.readValue(json, Sensor[].class));
+            Collection<COrder> readValues = new ObjectMapper().readValue(
+                    jsonAsString, new TypeReference<Collection<COrder>>() { }
+            );
+
+
+
+
             sensors.forEach(s -> System.out.println(s));
         }catch(JsonProcessingException e){
             e.printStackTrace();
