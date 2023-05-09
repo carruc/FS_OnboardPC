@@ -18,8 +18,12 @@ public class Main {
                 "Masetti Riccardo   " +
                 "Paltrinieri Davide");
 
-        String json = "{\"classname\":\"ThermalPressure\",\"name\":\"waterT\",\"CANID\":\"0x200\"," +
-                "\"byteInterval\":\"[ 4, 5 ]\",\"gain\":0.1,\"offset\":0,\"min\":\"NULL\",\"max\":\"NULL\"}";
+        String json = "[{\"classname\":\"ThermalPressure\",\"name\":\"waterT\",\"CANID\":\"0x200\"," +
+                "\"byteInterval\":\"[ 4, 5 ]\",\"gain\":0.1,\"offset\":0,\"min\":\"NULL\",\"max\":\"NULL\"}," +
+                "{\"classname\":\"ThermalPressure\",\"name\":\"waterT\",\"CANID\":\"0x200\"," +
+                "\"byteInterval\":\"[ 4, 5 ]\",\"gain\":0.1,\"offset\":0,\"min\":\"NULL\",\"max\":\"NULL\"}," +
+                "{\"classname\":\"ThermalPressure\",\"name\":\"waterT\",\"CANID\":\"0x200\"," +
+                "\"byteInterval\":\"[ 4, 5 ]\",\"gain\":0.1,\"offset\":0,\"min\":\"NULL\",\"max\":\"NULL\"}]";
 
         /*
         ora abbiamo una stinga nel main contenente tutto il file json
@@ -213,7 +217,7 @@ public class Main {
         try{
             /*Sensor sensor = mapper.readValue(json, Sensor.class);
             System.out.println(sensor.toString());*/
-            List<Sensor> sensors = mapper.readValue(jsonInput, new TypeReference<List<Sensor>>(){});
+            List<Sensor> sensors = mapper.readValue(json, new TypeReference<List<Sensor>>(){});
             sensors.forEach(s -> System.out.println(s.toString()));
         }catch(JsonProcessingException e){
             e.printStackTrace();
