@@ -1,0 +1,273 @@
+[
+  [
+    {
+      "classname": "ThermalPressure",
+      "name": "waterT",
+      "CANID": 0x200,
+      "byte_interval": [ 4, 5 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":,
+    },
+
+    {
+      "classname": "ThermalPressure",
+      "name": "airT",
+      "CANID": 0x208,
+      "byte_interval": [ 4, 5 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":,
+    },
+
+    {
+      "classname": "ThermalPressure",
+      "name": "oilP",
+      "CANID": 0x200,
+      "byte_interval": [ 6, 7 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":,
+    },
+
+    {
+      "classname": "ThermalPressure",
+      "name": "oilT",
+      "CANID": 0x204,
+      "byte_interval": [ 0, 1 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":,
+    },
+
+    {
+      "classname": "ThermalPressure",
+      "name": "fuelP",
+      "CANID": 0x208,
+      "byte_interval": [ 2, 3 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":
+    },
+
+    {
+      "classname": "ThermalPressure",
+      "name": "fuelT",
+      "CANID": 0x312,
+      "byte_interval": [ 0, 1 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":
+    }
+  ],
+
+  [
+    {
+      "classname": "Mechanics",
+      "name": "rpm",
+      "CANID": 0x200,
+      "byte_interval": [ 0, 1 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":
+    },
+
+    {
+      "classname": "Mechanics",
+      "name": "gear",
+      "CANID": 0x204,
+      "byte_interval": [ 4, 4 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":
+    },
+
+    {
+      "classname": "Mechanics",
+      "name": "slip",
+      "CANID": 0x20C,
+      "byte_interval": [ 1, 1 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":
+    },
+
+    {
+      "classname": "Mechanics",
+      "name": "speed",
+      "CANID": 0x20C,
+      "byte_interval": [ 2, 3 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":
+    },
+
+    {
+      "classname": "Mechanics",
+      "name": "tps",
+      "CANID": 0x200,
+      "byte_interval": [ 2, 3 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":
+    }
+  ],
+
+  [
+    {
+      "classname": "Controls",
+      "name": "batteryV",
+      "CANID": 0x204,
+      "byte_interval": [ 6, 7 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":
+    },
+
+    {
+      "classname": "Controls",
+      "name": "launchControlStatus",
+      "CANID": 0x220,
+      "byte_interval": [ 3, 3 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":
+    },
+
+    {
+      "classname": "Controls",
+      "name": "pedal",
+      "CANID": 0x20C,
+      "byte_interval": [ 0, 0 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":
+    },
+
+    {
+      "classname": "Controls",
+      "name": "brake",
+      "CANID": 0x20C,
+      "byte_interval": [ 4, 4 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":
+    },
+
+    {
+      "classname": "Controls",
+      "name": "brakeRear",
+      "CANID": 0x30C,
+      "byte_interval": [ 0, 1 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":
+    }
+  ],
+
+  [
+    {
+      "classname": "Tyres",
+      "name": "tyreTemp0",
+      "CANID": 0x208,
+      "byte_interval": [ 4, 5 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":,
+    },
+
+    {
+      "classname": "Tyres",
+      "name": "tyreTemp1",
+      "CANID": 0x208,
+      "byte_interval": [ 4, 5 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":
+    },
+
+    {
+      "classname": "Tyres",
+      "name": "tyreTemp2",
+      "CANID": 0x208,
+      "byte_interval": [ 4, 5 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":
+    },
+
+    {
+      "classname": "Tyres",
+      "name": "tyreTemp3",
+      "CANID": 0x208,
+      "byte_interval": [ 4, 5 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":
+    },
+
+    {
+      "classname": "Tyres",
+      "name": "tyreTemp4",
+      "CANID": 0x208,
+      "byte_interval": [ 4, 5 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":
+    },
+
+    {
+      "classname": "Tyres",
+      "name": "tyreTemp5",
+      "CANID": 0x208,
+      "byte_interval": [ 4, 5 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":
+    },
+
+    {
+      "classname": "Tyres",
+      "name": "tyreTemp6",
+      "CANID": 0x208,
+      "byte_interval": [ 4, 5 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":
+    },
+
+    {
+      "classname": "Tyres",
+      "name": "tyreTemp7",
+      "CANID": 0x208,
+      "byte_interval": [ 4, 5 ],
+      "gain":,
+      "offset":,
+      "min":,
+      "max":
+    }
+  ]
+]
