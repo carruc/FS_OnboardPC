@@ -23,6 +23,9 @@ dependencies {
     /* dependencies per la libreria protbuf-java */
     implementation 'com.google.protobuf:protobuf-java:3.19.6'
 
+    /* dependencies per la libreria ftp-FTPClient*/
+    implementation 'commons-net:commons-net:3.8.0'
+
     /* dependecies per la libreria json */
     implementation 'org.json:json:20210307'
 
