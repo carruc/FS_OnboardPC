@@ -128,7 +128,7 @@ public class Sensor {
 
     public Integer integerFormatter(Integer input){
         if(input > this.max){
-            return Math.floorMod();
+            return 0;
         }else if(input < this.min){
 
         }
