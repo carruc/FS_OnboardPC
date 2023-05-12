@@ -126,13 +126,9 @@ public class Sensor {
         this.max = max;
     }
 
-    public Integer integerFormatter(Integer input){
-        if(input > this.max){
-            return 0;
-        }else if(input < this.min){
-
-        }
-        return input;
+    public Float applyFormat(Float input){
+        /* Per ora applichiamo solo il gain, in futuro verrà ampliato??*/
+        return this.gain * input;
     }
     @Override
     public String toString() {

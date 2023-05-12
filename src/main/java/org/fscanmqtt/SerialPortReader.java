@@ -13,7 +13,6 @@ public class SerialPortReader extends Thread{
     private final int dataBits;
     private final int stopBits;
     private final int parity;
-    private final Map<String, Integer> sharedStatusCar;
 
 
     public SerialPortReader(String portName, int baudRate, int dataBits, int stopBits, int parity) {
@@ -22,7 +21,6 @@ public class SerialPortReader extends Thread{
         this.dataBits = dataBits;
         this.stopBits = stopBits;
         this.parity = parity;
-        sharedStatusCar = new HashMap<>();
     }
 
     public void connect() {
@@ -44,7 +42,6 @@ public class SerialPortReader extends Thread{
             }
              */
         return buffer;
-
     }
 
     public void disconnect() {
@@ -57,20 +54,6 @@ public class SerialPortReader extends Thread{
 
     @Override
     public void run() {
-        synchronized(sharedStatusCar) {
-            /* dentro questo metodo inseriamo ciò che il thread esegue alla chiamata della start() */
-            connect();
 
-            while(true){
-                try {
-                    readData(21);
-                    sharedStatusCar.put("sensore di prova", 42);
-                    System.out.println(sharedStatusCar.toString());
-                } catch (SerialPortException e) {
-                    disconnect();
-                    throw new RuntimeException("ERROR: error in with readData function\n" + e);
-                }
-            }
-        }
     }
 }
