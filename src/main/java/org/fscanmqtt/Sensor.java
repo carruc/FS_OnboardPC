@@ -127,7 +127,7 @@ public class Sensor {
     }
 
     public Float applyFormat(Float input){
-        /* Per ora applichiamo solo il gain, in futuro verrà ampliato??*/
+        /* Per ora applichiamo solo il gain, in futuro verrà ampliato?*/
         return this.gain * input;
     }
     @Override
