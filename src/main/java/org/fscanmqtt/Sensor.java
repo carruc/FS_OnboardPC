@@ -125,6 +125,15 @@ public class Sensor {
     public void setMax(Float max) {
         this.max = max;
     }
+
+    public Integer integerFormatter(Integer input){
+        if(input > this.max){
+            return Math.floorMod();
+        }else if(input < this.min){
+
+        }
+        return input;
+    }
     @Override
     public String toString() {
         return "Sensor{" +
