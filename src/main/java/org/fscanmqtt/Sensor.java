@@ -28,7 +28,7 @@ public class Sensor {
         this.classname = classname;
         this.name = name;
         this.canID = canID;
-        this.byteInterval = toIntArray(byteInterval) ;
+        this.byteInterval = toIntArray(byteInterval);
         this.gain = Float.parseFloat(gain);
         this.offset = Float.parseFloat(offset);
         if(min.equals("NULL")){
@@ -44,10 +44,11 @@ public class Sensor {
     }
 
     private Integer[] toIntArray(String byteInterval){
-        String[] strings = byteInterval.replaceAll("\\[", "")
-                .replaceAll("]", "")
-                .replaceAll(" ", "")
-                .split(",");
+            String[] strings = byteInterval.replaceAll("\\[", "")
+                    .replaceAll("]", "")
+                    .replaceAll(" ", "")
+                    .split(",");
+
 
         Integer[] array = new Integer[strings.length];
 
@@ -123,6 +124,15 @@ public class Sensor {
 
     public void setMax(Float max) {
         this.max = max;
+    }
+
+    public Integer integerFormatter(Integer input){
+        if(input > this.max){
+            return 0;
+        }else if(input < this.min){
+
+        }
+        return input;
     }
     @Override
     public String toString() {
