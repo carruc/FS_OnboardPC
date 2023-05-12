@@ -23,6 +23,8 @@ public class Main {
         serialThread.start();
         mqttThread.start();
          */
+        Integer ciao = 10;
+        Float ciaoao = (float) ciao;
     }
 
 }
