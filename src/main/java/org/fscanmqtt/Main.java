@@ -1,5 +1,6 @@
 package org.fscanmqtt;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,18 +21,15 @@ public class Main {
 
         String json = "[{\"classname\":\"ThermalPressure\",\"name\":\"waterT\",\"CANID\":\"0x200\"," +
                 "\"byteInterval\":\"[ 4, 5 ]\",\"gain\":0.1,\"offset\":0,\"min\":\"NULL\",\"max\":\"NULL\"}," +
-                "{\"classname\":\"ThermalPressure\",\"name\":\"waterT\",\"CANID\":\"0x200\"," +
-                "\"byteInterval\":\"[ 4, 5 ]\",\"gain\":0.1,\"offset\":0,\"min\":\"NULL\",\"max\":\"NULL\"}," +
-                "{\"classname\":\"ThermalPressure\",\"name\":\"waterT\",\"CANID\":\"0x200\"," +
+                "{\"classname\": \"ThermalPressure\",\"name\": \"airT\",\"CANID\":\"0x208\"," +
                 "\"byteInterval\":\"[ 4, 5 ]\",\"gain\":0.1,\"offset\":0,\"min\":\"NULL\",\"max\":\"NULL\"}]";
 
         /*
         ora abbiamo una stinga nel main contenente tutto il file json
         nella prossima implementazione questa stinga si otterrà con una iscrizione ad un topic mqtt sul broker
         */
-        String jsonInput = "{ \"sensors\":" +
+        String jsonInput =
                 "    [" +
-                "    " +
                 "      {" +
                 "        \"classname\": \"ThermalPressure\"," +
                 "        \"name\": \"waterT\"," +
@@ -42,7 +40,6 @@ public class Main {
                 "        \"min\":\"NULL\"," +
                 "        \"max\":\"NULL\"" +
                 "      }," +
-                "  " +
                 "      {" +
                 "        \"classname\": \"ThermalPressure\"," +
                 "        \"name\": \"airT\"," +
@@ -209,15 +206,12 @@ public class Main {
                 "        \"max\":\"NULL\"" +
                 "      }" +
                 "  " +
-                "  ]" +
-                "}";
+                "  ]";
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
         try{
-            /*Sensor sensor = mapper.readValue(json, Sensor.class);
-            System.out.println(sensor.toString());*/
-            List<Sensor> sensors = mapper.readValue(json, new TypeReference<List<Sensor>>(){});
+            List<Sensor> sensors = Arrays.asList(mapper.readValue(jsonInput, Sensor[].class));
             sensors.forEach(s -> System.out.println(s.toString()));
         }catch(JsonProcessingException e){
             e.printStackTrace();
@@ -233,4 +227,6 @@ public class Main {
         mqttThread.start();
          */
     }
+
+
 }
