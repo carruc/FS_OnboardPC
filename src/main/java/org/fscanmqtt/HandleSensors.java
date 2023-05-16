@@ -23,15 +23,18 @@ public class HandleSensors {
     public List<Sensor> sensors;
 
     public HandleSensors (){
+
         carStatus = new HashMap<>();
     }
     public void initializeCarStatus(){
         /*Crea mappa con ogni nome del sensore e valore da modificare.*/
+
         this.sensors.stream().forEach(sensor -> this.carStatus.put(sensor.getName(), Float.valueOf(0)));
     }
 
     public String getCANIdString(byte[] input){
         /*Traduce i 3 caratteri ascii che rappresentano il CANId*/
+
         byte[] tmp = new byte[CANID_DIM];
         System.arraycopy(input, CANID_OFF, tmp, 0,  CANID_DIM);
         return new String(tmp, StandardCharsets.US_ASCII);
@@ -39,6 +42,7 @@ public class HandleSensors {
 
     public byte[] getActualDataArray(byte[] input){
         /*Traduce i 16 caratteri ascii che rappresentano il dato grezzo*/
+
         byte[] tmp = new byte[DATA_DIM];
         System.arraycopy(input, DATA_OFF, tmp, 0,  DATA_DIM);
         ByteBuffer buffer = ByteBuffer.allocate(8);
@@ -50,14 +54,21 @@ public class HandleSensors {
     }
 
     public void updateCarStatus(String CANID, byte[] data){
-        /*Aggiorna carStatus con nuovo messaggio.*/
+        /*Aggiorna carStatus con nuovo messaggio, rispettivamente:
+        * 1) Crea uno stream dalla lista di sensori con cui e' stato inizializzata la classe;
+        * 2) Selezioniamo solo i sensor il cui attributo CANID matcha con la stringa CANId
+        *   (potrebbe essere necessario fare il filtraggio dei byte all'interno del methodo ma vabbe');
+        * 3) Per ognuno di questi sensori, prendiamo quelli presenti nel car status e ne sostituiamo il valore con il
+        *    giusto dato preso dai byte di CANData + formattiamo il valore se c'è gain, offset...;
+        * */
+
         sensors.stream()
                 .filter(sensor -> sensor.getCanID().equals(CANID))
                 .forEach(sensor -> this.carStatus.replace(
                                 sensor.getName(), sensor.applyFormat(
                                     (float) dataSubsetToInt(sensor.getByteInterval()[0], sensor.getByteInterval()[1], data))
-                                                                    )
-                                                        );
+                                                            )
+                        );
     }
 
     public int dataSubsetToInt(int first, int last, byte[] data){
@@ -267,5 +278,13 @@ public class HandleSensors {
         }catch(JsonProcessingException e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        this.carStatus.entrySet().stream().toList().forEach(stringFloatEntry -> str.append(stringFloatEntry.getKey() +
+                ": "+ stringFloatEntry.getValue() + ";\n"));
+        return str.toString();
     }
 }

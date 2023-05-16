@@ -23,8 +23,17 @@ public class Main {
         serialThread.start();
         mqttThread.start();
          */
-        Integer ciao = 10;
-        Float ciaoao = (float) ciao;
-    }
 
+        String CANID = "0x20C";
+        byte[] data = new byte[16];
+        for (int i = 0; i < data.length; ++i) {
+            data[i] = (byte) 255;
+        }
+
+        HandleSensors conca = new HandleSensors();
+        conca.initializeSensorList();
+        conca.initializeCarStatus();
+        conca.updateCarStatus(CANID, data);
+        System.out.println(conca.toString());
+    }
 }

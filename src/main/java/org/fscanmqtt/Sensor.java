@@ -130,6 +130,7 @@ public class Sensor {
         /* Per ora applichiamo solo il gain, in futuro verrà ampliato?*/
         return this.gain * input;
     }
+
     @Override
     public String toString() {
         return "Sensor{" +
