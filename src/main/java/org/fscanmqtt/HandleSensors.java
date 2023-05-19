@@ -38,7 +38,7 @@ public class HandleSensors {
         return carStatus;
     }
 
-    private String getCANIdString(byte[] input){
+    public String getCANIdString(byte[] input){
         /*Traduce i 3 caratteri ascii che rappresentano il CANId*/
 
         byte[] tmp = new byte[CANID_DIM];
@@ -46,7 +46,7 @@ public class HandleSensors {
         return new String(tmp, StandardCharsets.US_ASCII);
     }
 
-    private byte[] getActualDataArray(byte[] input){
+    public byte[] getActualDataArray(byte[] input){
         /*Traduce i 16 caratteri ascii che rappresentano il dato grezzo*/
 
         byte[] tmp = new byte[DATA_DIM];
