@@ -8,9 +8,12 @@ import org.fscanmqtt.Sensor;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLOutput;
 import java.util.Arrays;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.BiFunction;
 
 public class HandleSensors {
     private final int CANID_OFF = 0;
@@ -37,16 +40,18 @@ public class HandleSensors {
     }
 
     public String getCANIdString(byte[] input){
-        /*Traduce i 3 caratteri ascii che rappresentano il CANID*/
+        /*Traduce i 3 caratteri ascii che rappresentano il CANId*/
+
         byte[] tmp = new byte[CANID_DIM];
         System.arraycopy(input, CANID_OFF, tmp, 0,  CANID_DIM);
-        StringBuilder string = new StringBuilder("0x");
-        return string.append(new String(tmp, StandardCharsets.US_ASCII)).toString();
+        String str = new String(tmp, StandardCharsets.US_ASCII);
+        StringBuilder stringBuilder = new StringBuilder("0x");
+        stringBuilder.append(str);
+        return stringBuilder.toString();
     }
 
     public byte[] getActualDataArray(byte[] input){
         /*Traduce i 16 caratteri ascii che rappresentano il dato grezzo*/
-
         byte[] tmp = new byte[DATA_DIM];
         System.arraycopy(input, DATA_OFF, tmp, 0,  DATA_DIM);
         ByteBuffer buffer = ByteBuffer.allocate(8);
@@ -59,25 +64,25 @@ public class HandleSensors {
 
     public void updateCarStatus(String CANID, byte[] data){
         /*Aggiorna carStatus con nuovo messaggio, rispettivamente:
-        * 1) Crea uno stream dalla lista di sensori con cui e' stato inizializzata la classe;
-        * 2) Selezioniamo solo i sensor il cui attributo CANID matcha con la stringa CANId
-        *   (potrebbe essere necessario fare il filtraggio dei byte all'interno del methodo ma vabbe');
-        * 3) Per ognuno di questi sensori, prendiamo quelli presenti nel car status e ne sostituiamo il valore
-        *   con il dato processato a partire dall'array di byte.;
-        * */
+         * 1) Crea uno stream dalla lista di sensori con cui e' stato inizializzata la classe;
+         * 2) Selezioniamo solo i sensor il cui attributo CANID matcha con la stringa CANId
+         *   (potrebbe essere necessario fare il filtraggio dei byte all'interno del methodo ma vabbe');
+         * 3) Per ognuno di questi sensori, prendiamo quelli presenti nel car status e ne sostituiamo il valore
+         *   con il dato processato a partire dall'array di byte.;
+         * */
 
         sensors.stream()
                 .filter(sensor -> sensor.getCanID().equals(CANID))
                 .forEach(sensor -> this.carStatus.replace(
-                                                            sensor.getName(),
-                                                            sensorValue(sensor, data)
-                                                        )
-                        );
+                                sensor.getName(),
+                                sensorValue(sensor, data)
+                        )
+                );
     }
 
     private Float sensorValue(Sensor sensor, byte[] data){
         /*Funzione che a partire dai dati grazzi, restituisce il dato in float, formattandolo secondo i suoi valori
-        * di gain, offset, etc*/
+         * di gain, offset, etc*/
         return sensor.applyFormat(
                 (float) dataSubsetToInt(sensor.getByteInterval()[0], sensor.getByteInterval()[1], data));
     }
@@ -298,4 +303,17 @@ public class HandleSensors {
                 ": "+ stringFloatEntry.getValue() + ";\n"));
         return str.toString();
     }
+
+    public String toJSON() {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            String json = objectMapper.writeValueAsString(getCarStatus());
+            return json;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
