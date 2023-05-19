@@ -77,7 +77,7 @@ public class ClientMQTT extends Thread{
 
     @Override
     public void run() {
-        while (true) {
+        while (!isInterrupted()) {
             sendMessage(sharedHandleSensors.toJSON());
             System.out.println(sharedHandleSensors.toJSON());
             //System.out.println("messaggio inviato");

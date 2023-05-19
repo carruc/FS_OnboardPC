@@ -57,7 +57,7 @@ public class SerialPortReader extends Thread{
 
     @Override
     public void run() {
-        while (true){
+        while (!isInterrupted()){
             try {
                 byte[] format = readData(1);
                 if (format[0] == 't'){
