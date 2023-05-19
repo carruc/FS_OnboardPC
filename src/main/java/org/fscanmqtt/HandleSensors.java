@@ -37,11 +37,11 @@ public class HandleSensors {
     }
 
     public String getCANIdString(byte[] input){
-        /*Traduce i 3 caratteri ascii che rappresentano il CANId*/
-
+        /*Traduce i 3 caratteri ascii che rappresentano il CANID*/
         byte[] tmp = new byte[CANID_DIM];
         System.arraycopy(input, CANID_OFF, tmp, 0,  CANID_DIM);
-        return new String(tmp, StandardCharsets.US_ASCII);
+        StringBuilder string = new StringBuilder("0x");
+        return string.append(new String(tmp, StandardCharsets.US_ASCII)).toString();
     }
 
     public byte[] getActualDataArray(byte[] input){
