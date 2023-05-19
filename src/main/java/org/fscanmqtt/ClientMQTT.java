@@ -14,14 +14,12 @@ public class ClientMQTT extends Thread{
     private final String clientID;
     private MqttClient client;
     private String topic;
-    private final Map<String, Integer> sharedStatusCar;
 
     public ClientMQTT(String broker, String username, String psw, String clientID) {
         this.broker = broker;
         this.username = username;
         this.psw = psw;
         this.clientID = clientID;
-        sharedStatusCar = new HashMap<>();
     }
 
     public void mqttConnect(){
@@ -73,14 +71,6 @@ public class ClientMQTT extends Thread{
 
     @Override
     public void run() {
-        mqttConnect();
-        try {
-            sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        synchronized(sharedStatusCar) {
-            sendMessage(topic, sharedStatusCar.toString());
-        }
+
     }
 }
