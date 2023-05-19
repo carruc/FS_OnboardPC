@@ -13,13 +13,19 @@ public class ClientMQTT extends Thread{
     private final String psw;
     private final String clientID;
     private MqttClient client;
-    private String topic;
 
-    public ClientMQTT(String broker, String username, String psw, String clientID) {
+
+
+    private String topic;
+    private final HandleSensors sharedHandleSensors;
+
+    public ClientMQTT(String broker, String username, String psw, String clientID, String topic, HandleSensors sharedHandleSensors) {
         this.broker = broker;
         this.username = username;
         this.psw = psw;
         this.clientID = clientID;
+        this.topic = topic;
+        this.sharedHandleSensors = sharedHandleSensors;
     }
 
     public void mqttConnect(){
@@ -38,13 +44,13 @@ public class ClientMQTT extends Thread{
         }
     }
 
-    public void sendMessage(String topic, String msg){
+    public void sendMessage(String msg){
         try{
             // create message and setup QoS
             MqttMessage message = new MqttMessage(msg.getBytes());
             message.setQos(0);
             // publish message
-            client.publish(topic, message);
+            client.publish(this.topic, message);
         } catch (MqttException e) {
             throw new RuntimeException(e);
         }
@@ -71,6 +77,16 @@ public class ClientMQTT extends Thread{
 
     @Override
     public void run() {
-
+        while (true) {
+            sendMessage(sharedHandleSensors.toJSON());
+            System.out.println(sharedHandleSensors.toJSON());
+            //System.out.println("messaggio inviato");
+            try {
+                sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
