@@ -20,18 +20,10 @@ public class Main {
         ClientMQTT mqttThread = new ClientMQTT("tcp://94.23.68.97:1883", "deky", "Telemetry1!", "hivemq");
         mqttThread.setTopic("topic_name");
 
-        serialThread.start();
+
         mqttThread.start();
          */
 
-        String CANID = "0x20C";
-        byte[] data = new byte[16];
-        for (int i = 0; i < data.length; ++i) {
-            data[i] = (byte) 255;
-        }
 
-        HandleSensors conca = new HandleSensors();
-        conca.updateCarStatus(CANID, data);
-        System.out.println(conca.toString());
     }
 }
