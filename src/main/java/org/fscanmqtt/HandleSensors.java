@@ -9,10 +9,8 @@ import org.fscanmqtt.Sensor;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.BiFunction;
+import java.util.HashMap;
 
 public class HandleSensors {
     private final int CANID_OFF = 0;
