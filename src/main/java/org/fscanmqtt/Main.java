@@ -31,8 +31,6 @@ public class Main {
         }
 
         HandleSensors conca = new HandleSensors();
-        conca.initializeSensorList();
-        conca.initializeCarStatus();
         conca.updateCarStatus(CANID, data);
         System.out.println(conca.toString());
     }

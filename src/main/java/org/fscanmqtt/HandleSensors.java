@@ -22,17 +22,23 @@ public class HandleSensors {
     private HashMap<String, Float> carStatus;
     public List<Sensor> sensors;
 
-    public HandleSensors (){
+    public HandleSensors (){/*FILE json*/
 
         carStatus = new HashMap<>();
+        initializeSensorList(); //inserisci file
+        initializeCarStatus();
     }
-    public void initializeCarStatus(){
+    private void initializeCarStatus(){
         /*Crea mappa con ogni nome del sensore e valore da modificare.*/
 
         this.sensors.stream().forEach(sensor -> this.carStatus.put(sensor.getName(), Float.valueOf(0)));
     }
 
-    public String getCANIdString(byte[] input){
+    public HashMap<String, Float> getCarStatus() {
+        return carStatus;
+    }
+
+    private String getCANIdString(byte[] input){
         /*Traduce i 3 caratteri ascii che rappresentano il CANId*/
 
         byte[] tmp = new byte[CANID_DIM];
@@ -40,7 +46,7 @@ public class HandleSensors {
         return new String(tmp, StandardCharsets.US_ASCII);
     }
 
-    public byte[] getActualDataArray(byte[] input){
+    private byte[] getActualDataArray(byte[] input){
         /*Traduce i 16 caratteri ascii che rappresentano il dato grezzo*/
 
         byte[] tmp = new byte[DATA_DIM];
@@ -58,20 +64,27 @@ public class HandleSensors {
         * 1) Crea uno stream dalla lista di sensori con cui e' stato inizializzata la classe;
         * 2) Selezioniamo solo i sensor il cui attributo CANID matcha con la stringa CANId
         *   (potrebbe essere necessario fare il filtraggio dei byte all'interno del methodo ma vabbe');
-        * 3) Per ognuno di questi sensori, prendiamo quelli presenti nel car status e ne sostituiamo il valore con il
-        *    giusto dato preso dai byte di CANData + formattiamo il valore se c'è gain, offset...;
+        * 3) Per ognuno di questi sensori, prendiamo quelli presenti nel car status e ne sostituiamo il valore
+        *   con il dato processato a partire dall'array di byte.;
         * */
 
         sensors.stream()
                 .filter(sensor -> sensor.getCanID().equals(CANID))
                 .forEach(sensor -> this.carStatus.replace(
-                                sensor.getName(), sensor.applyFormat(
-                                    (float) dataSubsetToInt(sensor.getByteInterval()[0], sensor.getByteInterval()[1], data))
-                                                            )
+                                                            sensor.getName(),
+                                                            sensorValue(sensor, data)
+                                                        )
                         );
     }
 
-    public int dataSubsetToInt(int first, int last, byte[] data){
+    private Float sensorValue(Sensor sensor, byte[] data){
+        /*Funzione che a partire dai dati grazzi, restituisce il dato in float, formattandolo secondo i suoi valori
+        * di gain, offset, etc*/
+        return sensor.applyFormat(
+                (float) dataSubsetToInt(sensor.getByteInterval()[0], sensor.getByteInterval()[1], data));
+    }
+
+    private int dataSubsetToInt(int first, int last, byte[] data){
         /* Converte un byte[] nell'int che rappresenta */
         if(     first < 0
                 || first > data.length
@@ -89,7 +102,7 @@ public class HandleSensors {
 
         return ret;
     }
-    public void initializeSensorList(){
+    private void initializeSensorList(){
         /*Scrivere funzione di download e lettura del file json dal sito.*/
         String jsonInput =
                 "    [" +
