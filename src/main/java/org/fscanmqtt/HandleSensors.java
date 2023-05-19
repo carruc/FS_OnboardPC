@@ -9,10 +9,8 @@ import org.fscanmqtt.Sensor;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.BiFunction;
+import java.util.HashMap;
 
 public class HandleSensors {
     private final int CANID_OFF = 0;
@@ -39,11 +37,11 @@ public class HandleSensors {
     }
 
     public String getCANIdString(byte[] input){
-        /*Traduce i 3 caratteri ascii che rappresentano il CANId*/
-
+        /*Traduce i 3 caratteri ascii che rappresentano il CANID*/
         byte[] tmp = new byte[CANID_DIM];
         System.arraycopy(input, CANID_OFF, tmp, 0,  CANID_DIM);
-        return new String(tmp, StandardCharsets.US_ASCII);
+        StringBuilder string = new StringBuilder("0x");
+        return string.append(new String(tmp, StandardCharsets.US_ASCII)).toString();
     }
 
     public byte[] getActualDataArray(byte[] input){
