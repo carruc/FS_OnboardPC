@@ -62,7 +62,6 @@ public class SerialPortReader extends Thread{
                 byte[] format = readData(1);
                 if (format[0] == 't'){
                     byte[] data = readData(20);
-                    for(byte b : data) {System.out.print((char) b);}
                     sharedHandleSensors.updateCarStatus(sharedHandleSensors.getCANIdString(data), sharedHandleSensors.getActualDataArray(data));
                     //sharedHandleSensors.updateCarStatus("0x20C", new byte[] { 0,1,2,3,4,5,6,7 });
                 }

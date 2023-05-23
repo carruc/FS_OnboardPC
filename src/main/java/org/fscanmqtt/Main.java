@@ -6,16 +6,24 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Main {
-    public static void main(String[] args) {
 
+    public static boolean checkArgs(String[] args){
         if (args[0].matches("COM*")) {
             System.out.println("ERR1: " + args[0] + " is not a valid portname.");
-            return;
+            return false;
         }
 
         File controlFile = new File(args[1]);
         if (!controlFile.canRead() || !controlFile.exists()) {
             System.out.println("ERR1: " + args[1] + " is not a valid portname.");
+            return false;
+        }
+
+        return true;
+    }
+    public static void main(String[] args) {
+
+        if(!checkArgs(args)){
             return;
         }
 
