@@ -21,9 +21,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class Main {
     public static void main(String[] args) {
 
+        try{
+            if(args[0].length() < 4 || args[0].charAt(0) != 'C' || args[0].charAt(1) != 'O' || args[0].charAt(2) != 'M') {
+                System.out.println("ERR1: " + args[0] + " is not a valid portname.");
+                return;
+            }
+        }catch(ArrayIndexOutOfBoundsException e){
+            System.out.println(e);
+        }
+
         HandleSensors handleSensors = new HandleSensors(); // shared object
-        //System.out.println(handleSensors.toJSON());
-        SerialPortReader serialPortReader = new SerialPortReader("COM7", 115200, 8,1,0, handleSensors);
+        SerialPortReader serialPortReader = new SerialPortReader(args[0], 115200, 8,1,0, handleSensors);
         ClientMQTT clientMQTT = new ClientMQTT("tcp://94.23.68.97:1883", "deky", "Telemetry1!", "hivemq", "topic_name",handleSensors);
 
         clientMQTT.mqttConnect();
