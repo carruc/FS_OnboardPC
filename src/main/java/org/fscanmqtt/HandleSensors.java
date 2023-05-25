@@ -10,7 +10,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,7 +20,7 @@ public class HandleSensors {
     private final int CANID_DIM = 3;
     private final int DATA_OFF = 4;
     private final int DATA_DIM = 16;
-    private HashMap<String, Float> carStatus;
+    private final HashMap<String, Float> carStatus;
     public List<Sensor> sensors;
 
     public HandleSensors (String pathname){/*FILE json*/
@@ -32,7 +31,7 @@ public class HandleSensors {
     }
     private void initializeCarStatus(){
         /*Crea mappa con ogni nome del sensore e valore da modificare.*/
-        this.sensors.stream().forEach(sensor -> this.carStatus.put(sensor.getName(), Float.valueOf(0)));
+        this.sensors.stream().forEach(sensor -> this.carStatus.put(sensor.getName(), (float) 0));
     }
 
     public HashMap<String, Float> getCarStatus() {
@@ -95,7 +94,7 @@ public class HandleSensors {
     private int dataSubsetToInt(int first, int last, byte[] data){
         /* Converte un byte[] nell'int che rappresenta */
         if(     first < 0
-                || first > data.length
+                //|| first > data.length
                 || last > data.length
                 || last < 0
                 || first > last){
@@ -105,7 +104,7 @@ public class HandleSensors {
         int ret = 0;
 
         for(int i = last, k = 0; i >= first; i = i - 1, ++k){
-            ret += ((int)Math.pow((double)256, (double)k))*(int)data[i];
+            ret += ((int)Math.pow(256, k))*(int)data[i];
         }
 
         return ret;
@@ -150,7 +149,7 @@ public class HandleSensors {
         /*Soluzione temporanea prima di universalizzare*/
         StringBuilder add =
                 new StringBuilder("{\"Date\":\"" + LocalDate.now() + "\",\"Hour\": \"" + LocalTime.now() + "\",");
-        add.append(input.substring(1, input.length()));
+        add.append(input.substring(1));
         return add.toString();
     }
 
