@@ -9,6 +9,9 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +32,6 @@ public class HandleSensors {
     }
     private void initializeCarStatus(){
         /*Crea mappa con ogni nome del sensore e valore da modificare.*/
-
         this.sensors.stream().forEach(sensor -> this.carStatus.put(sensor.getName(), Float.valueOf(0)));
     }
 
@@ -71,6 +73,7 @@ public class HandleSensors {
          *   (potrebbe essere necessario fare il filtraggio dei byte all'interno del methodo ma vabbe');
          * 3) Per ognuno di questi sensori, prendiamo quelli presenti nel car status e ne sostituiamo il valore
          *   con il dato processato a partire dall'array di byte.;
+         * 4) Update del timestamp
          * */
 
         sensors.stream()
@@ -143,15 +146,24 @@ public class HandleSensors {
         return str.toString();
     }
 
+    private String addAdditionalInfo(String input){
+        /*Soluzione temporanea prima di universalizzare*/
+        StringBuilder add =
+                new StringBuilder("{\"Date\":\"" + LocalDate.now() + "\",\"Hour\": \"" + LocalTime.now() + "\",");
+        add.append(input.substring(1, input.length()));
+        return add.toString();
+    }
+
     public String toJSON() {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
             String json = objectMapper.writeValueAsString(getCarStatus());
-            return json;
+            return addAdditionalInfo(json);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 

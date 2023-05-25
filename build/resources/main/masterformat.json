@@ -158,5 +158,89 @@
     "offset": 0.0,
     "min": 0.0,
     "max": "NULL"
+  },
+  {
+    "classname": "Tyres",
+    "name": "tyreTemp0",
+    "CANID": "0x208",
+    "byteInterval": "[ 4, 5 ]",
+    "gain": 1.0,
+    "offset": 0.0,
+    "min": "NULL",
+    "max": "NULL"
+  },
+
+  {
+    "classname": "Tyres",
+    "name": "tyreTemp1",
+    "CANID": "0x208",
+    "byteInterval": "[ 4, 5 ]",
+    "gain": 1.0,
+    "offset": 0.0,
+    "min": "NULL",
+    "max": "NULL"
+  },
+
+  {
+    "classname": "Tyres",
+    "name": "tyreTemp2",
+    "CANID": "0x208",
+    "byteInterval": "[ 4, 5 ]",
+    "gain": 1.0,
+    "offset": 0.0,
+    "min": "NULL",
+    "max": "NULL"
+  },
+
+  {
+    "classname": "Tyres",
+    "name": "tyreTemp3",
+    "CANID": "0x208",
+    "byteInterval": "[ 4, 5 ]",
+    "gain": 1.0,
+    "offset": 0.0,
+    "min": "NULL",
+    "max": "NULL"
+  },
+
+  {
+    "classname": "Tyres",
+    "name": "tyreTemp4",
+    "CANID": "0x208",
+    "byteInterval": "[ 4, 5 ]",
+    "gain": 1.0,
+    "offset": 0.0,
+    "min": "NULL",
+    "max": "NULL"
+  },
+  {
+    "classname": "Tyres",
+    "name": "tyreTemp5",
+    "CANID": "0x208",
+    "byteInterval": "[ 4, 5 ]",
+    "gain": 1.0,
+    "offset": 0.0,
+    "min": "NULL",
+    "max": "NULL"
+  },
+  {
+    "classname": "Tyres",
+    "name": "tyreTemp6",
+    "CANID": "0x208",
+    "byteInterval": "[ 4, 5 ]",
+    "gain": 1.0,
+    "offset": 0.0,
+    "min": "NULL",
+    "max": "NULL"
+  },
+  {
+    "classname": "Tyres",
+    "name": "tyreTemp7",
+    "CANID": "0x208",
+    "byteInterval": "[ 4, 5 ]",
+    "gain": 1.0,
+    "offset": 0.0,
+    "min": "NULL",
+    "max": "NULL"
   }
 ]
