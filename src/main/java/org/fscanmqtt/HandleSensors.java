@@ -9,8 +9,6 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -23,15 +21,27 @@ public class HandleSensors {
     private final HashMap<String, Float> carStatus;
     public List<Sensor> sensors;
 
+    public Timer raceTimeElapsed;
+
+
+    public HashMap<Sensor, Timer> timerMap;
+
     public HandleSensors (String pathname){/*FILE json*/
 
         carStatus = new HashMap<>();
         initializeSensorList(pathname); //inserisci file
         initializeCarStatus();
+        initializeTimerMap();
+        raceTimeElapsed.startTimer();
     }
     private void initializeCarStatus(){
         /*Crea mappa con ogni nome del sensore e valore da modificare.*/
         this.sensors.stream().forEach(sensor -> this.carStatus.put(sensor.getName(), (float) 0));
+    }
+    private void initializeTimerMap(){
+        /*Crea mappa con ogni nome del sensore e timer attivita'.*/
+        this.sensors.stream().filter(sensor -> sensor.getToMeasure())
+                .forEach(sensor -> this.timerMap.put(sensor, new Timer()));
     }
 
     public HashMap<String, Float> getCarStatus() {
@@ -137,6 +147,21 @@ public class HandleSensors {
         }
     }
 
+    public void sensorCheck(){
+        /*Metodo per fare il logging per i sensori da controllare (i.e. conta ore speed>0)*/
+        this.sensors.stream()
+                .filter(sensor -> this.timerMap.containsKey(sensor.getName()))
+                .filter(sensor -> sensor.compare(this.carStatus.get(sensor.getName())))
+                .filter(sensor -> timerMap.get(sensor.getName()).isNotCounting())
+                .forEach(sensor -> timerMap.get(sensor.getName()).startTimer());
+
+        this.sensors.stream()
+                .filter(sensor -> this.timerMap.containsKey(sensor.getName()))
+                .filter(sensor -> !timerMap.get(sensor.getName()).isNotCounting())
+                .filter(sensor -> !sensor.compare(this.carStatus.get(sensor.getName())))
+                .forEach(sensor -> timerMap.get(sensor.getName()).stopTimer(sensor.getName()));
+    }
+
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
@@ -148,7 +173,7 @@ public class HandleSensors {
     private String addTimeJson(String input){
         /*Soluzione temporanea prima di universalizzare*/
         StringBuilder add =
-                new StringBuilder("{\"Date\":\"" + LocalDate.now() + "\",\"Hour\": \"" + LocalTime.now() + "\",");
+                new StringBuilder("{\"Hour\": " + 27 + ",");
         add.append(input.substring(1));
         return add.toString();
     }

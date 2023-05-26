@@ -9,13 +9,14 @@ public class Main {
 
     public static boolean checkArgs(String[] args){
         if (args[0].matches("COM*")) {
-            System.out.println("ERR1: " + args[0] + " is not a valid portname.");
+            System.out.println("ERR1: " + args[0] + " is not a valid portname. Correct usage is: programName " +
+                    "<usbport> <masterformat.json abs pathname>");
             return false;
         }
 
         File controlFile = new File(args[1]);
         if (!controlFile.canRead() || !controlFile.exists()) {
-            System.out.println("ERR1: " + args[1] + " is not a valid portname.");
+            System.out.println("ERR2: " + args[1] + " is not a valid filename, or it isn't readable.");
             return false;
         }
 
