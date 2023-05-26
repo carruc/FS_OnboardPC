@@ -4,9 +4,6 @@ package org.fscanmqtt;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class SerialPortReader extends Thread{
     private final SerialPort serialPort;
     private final int baudRate;
