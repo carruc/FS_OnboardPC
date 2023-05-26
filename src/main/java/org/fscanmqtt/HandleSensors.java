@@ -145,7 +145,7 @@ public class HandleSensors {
         return str.toString();
     }
 
-    private String addAdditionalInfo(String input){
+    private String addTimeJson(String input){
         /*Soluzione temporanea prima di universalizzare*/
         StringBuilder add =
                 new StringBuilder("{\"Date\":\"" + LocalDate.now() + "\",\"Hour\": \"" + LocalTime.now() + "\",");
@@ -158,7 +158,7 @@ public class HandleSensors {
 
         try {
             String json = objectMapper.writeValueAsString(getCarStatus());
-            return addAdditionalInfo(json);
+            return addTimeJson(json);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
