@@ -1,6 +1,7 @@
 package org.fscanmqtt;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.Duration;
@@ -10,19 +11,19 @@ public class Timer {
     private LocalDateTime startTime;
     private Duration accumulatedTime;
     private String logFileName;
-    private String sensorName;
 
     public Timer(String sensorName) {
         accumulatedTime = Duration.ZERO;
-        this.sensorName = sensorName;
-        this.logFileName = LocalDateTime.now().toString()+ "_" + sensorName + ".log";
+        this.logFileName = "C:\\Users\\pietr\\IdeaProjects\\FS_OnboardPC\\src\\main\\resources\\logs" + File.separator + sensorName + ".log";
+        System.out.println("Creo file " + logFileName);
         createLogFile();
     }
 
     private void createLogFile() {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(logFileName, false));
-            writer.close();
+            File file = new File(logFileName);
+            file.createNewFile();
+            System.out.println("File: " + file);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -48,12 +49,12 @@ public class Timer {
 
     public boolean isNotCounting() {
         /*Ritorna true se la variabile startTime non e' piena (non sta contando)*/
-        return startTime.equals(null);
+        return startTime == null;
     }
 
     private void saveToLogFile(Duration elapsedTime) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.logFileName, true))) {
-            writer.write(this.sensorName + ": " + elapsedTime.getSeconds() + "s");
+            writer.write(elapsedTime.toMillis() + "ms");
             writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();

@@ -92,6 +92,8 @@ public class HandleSensors {
                                 sensorValue(sensor, data)
                         )
                 );
+
+        sensorCheck();
     }
 
     private Float sensorValue(Sensor sensor, byte[] data){
@@ -149,17 +151,13 @@ public class HandleSensors {
 
     public void sensorCheck(){
         /*Metodo per fare il logging per i sensori da controllare (i.e. conta ore speed>0)*/
-        this.sensors.stream()
-                .filter(sensor -> this.timerMap.containsKey(sensor.getName()))
-                .filter(sensor -> sensor.compare(this.carStatus.get(sensor.getName())))
-                .filter(sensor -> timerMap.get(sensor.getName()).isNotCounting())
-                .forEach(sensor -> timerMap.get(sensor.getName()).startTimer());
-
-        this.sensors.stream()
-                .filter(sensor -> this.timerMap.containsKey(sensor.getName()))
-                .filter(sensor -> !timerMap.get(sensor.getName()).isNotCounting())
-                .filter(sensor -> !sensor.compare(this.carStatus.get(sensor.getName())))
-                .forEach(sensor -> timerMap.get(sensor.getName()).stopTimer());
+       this.timerMap.forEach((sensor, timer) -> {
+            if( sensor.isXerThanCompareTo(this.carStatus.get(sensor.getName())) && timer.isNotCounting() ){
+                this.timerMap.get(sensor).startTimer();
+            }else if ( !sensor.isXerThanCompareTo(this.carStatus.get(sensor.getName())) && !timer.isNotCounting() ){
+                this.timerMap.get(sensor).stopTimer();
+            }
+       });
     }
 
     @Override
@@ -180,7 +178,6 @@ public class HandleSensors {
 
     public String toJSON() {
         ObjectMapper objectMapper = new ObjectMapper();
-
         try {
             String json = objectMapper.writeValueAsString(getCarStatus());
             return addTimeJson(json);

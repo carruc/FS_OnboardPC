@@ -150,7 +150,7 @@ public class Sensor {
         this.max = max;
     }
 
-    public boolean compare(Float value){
+    public boolean isXerThanCompareTo(Float value){
         /*Ritorna true se il valore supera i limiti definiti*/
         if(higher){
             return value > compareTo;
