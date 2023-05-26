@@ -1,0 +1,88 @@
+{
+    "classname": "Tyres",
+    "name": "tyreTemp0",
+    "CANID": "0x208",
+    "byte_interval": "[ 4, 5 ],
+    "gain":,
+    "offset": 0.0,
+    "min":,
+    "max":,
+  },
+
+  {
+    "classname": "Tyres",
+    "name": "tyreTemp1",
+    "CANID": "0x208",
+    "byte_interval": "[ 4, 5 ],
+    "gain":,
+    "offset": 0.0,
+    "min":,
+    "max":
+  },
+
+  {
+    "classname": "Tyres",
+    "name": "tyreTemp2",
+    "CANID": "0x208",
+    "byte_interval": "[ 4, 5 ],
+    "gain":,
+    "offset": 0.0,
+    "min":,
+    "max":
+  },
+
+  {
+    "classname": "Tyres",
+    "name": "tyreTemp3",
+    "CANID": "0x208",
+    "byte_interval": "[ 4, 5 ],
+    "gain":,
+    "offset": 0.0,
+    "min":,
+    "max":
+  },
+
+  {
+    "classname": "Tyres",
+    "name": "tyreTemp4",
+    "CANID": "0x208",
+    "byte_interval": "[ 4, 5 ],
+    "gain":,
+    "offset": 0.0,
+    "min":,
+    "max":
+  },
+
+  {
+    "classname": "Tyres",
+    "name": "tyreTemp5",
+    "CANID": "0x208",
+    "byte_interval": "[ 4, 5 ],
+    "gain":,
+    "offset": 0.0,
+    "min":,
+    "max":
+  },
+
+  {
+    "classname": "Tyres",
+    "name": "tyreTemp6",
+    "CANID": "0x208",
+    "byte_interval": "[ 4, 5 ],
+    "gain":,
+    "offset": 0.0,
+    "min":,
+    "max":
+  },
+
+  {
+    "classname": "Tyres",
+    "name": "tyreTemp7",
+    "CANID": "0x208",
+    "byte_interval": "[ 4, 5 ],
+    "gain":,
+    "offset": 0.0,
+    "min":,
+    "max":
+  }
+]

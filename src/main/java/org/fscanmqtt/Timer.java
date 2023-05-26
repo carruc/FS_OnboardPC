@@ -9,23 +9,39 @@ import java.time.LocalDateTime;
 public class Timer {
     private LocalDateTime startTime;
     private Duration accumulatedTime;
+    private String logFileName;
+    private String sensorName;
 
-    public Timer() {
+    public Timer(String sensorName) {
         accumulatedTime = Duration.ZERO;
+        this.sensorName = sensorName;
+        this.logFileName = LocalDateTime.now().toString()+ "_" + sensorName + ".log";
+        createLogFile();
+    }
+
+    private void createLogFile() {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(logFileName, false));
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void startTimer() {
         startTime = LocalDateTime.now();
     }
 
-    public void getTimerMillis(){
-        
+    public long getTimerMillis() {
+        Duration elapsedTime = Duration.between(startTime, LocalDateTime.now());
+        return elapsedTime.toMillis();
     }
-    public void stopTimer(String sensorName) {
+
+    public void stopTimer() {
         if (startTime != null) {
             Duration elapsedTime = Duration.between(startTime, LocalDateTime.now());
             accumulatedTime = accumulatedTime.plus(elapsedTime);
-            saveToLogFile(sensorName, elapsedTime);
+            saveToLogFile(elapsedTime);
             startTime = null;
         }
     }
@@ -35,9 +51,10 @@ public class Timer {
         return startTime.equals(null);
     }
 
-    private void saveToLogFile(String sensorName, Duration elapsedTime) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("timer.log", true))) {
-            writer.write(sensorName + ": " + elapsedTime.getSeconds() + "s"); writer.newLine();
+    private void saveToLogFile(Duration elapsedTime) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.logFileName, true))) {
+            writer.write(this.sensorName + ": " + elapsedTime.getSeconds() + "s");
+            writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
         }

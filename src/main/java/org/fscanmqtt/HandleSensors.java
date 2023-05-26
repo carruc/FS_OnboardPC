@@ -22,8 +22,6 @@ public class HandleSensors {
     public List<Sensor> sensors;
 
     public Timer raceTimeElapsed;
-
-
     public HashMap<Sensor, Timer> timerMap;
 
     public HandleSensors (String pathname){/*FILE json*/
@@ -32,6 +30,7 @@ public class HandleSensors {
         initializeSensorList(pathname); //inserisci file
         initializeCarStatus();
         initializeTimerMap();
+        raceTimeElapsed = new Timer("raceTimeElapsed");
         raceTimeElapsed.startTimer();
     }
     private void initializeCarStatus(){
@@ -40,8 +39,9 @@ public class HandleSensors {
     }
     private void initializeTimerMap(){
         /*Crea mappa con ogni nome del sensore e timer attivita'.*/
+        this.timerMap = new HashMap<>();
         this.sensors.stream().filter(sensor -> sensor.getToMeasure())
-                .forEach(sensor -> this.timerMap.put(sensor, new Timer()));
+                .forEach(sensor -> this.timerMap.put(sensor, new Timer(sensor.getName())));
     }
 
     public HashMap<String, Float> getCarStatus() {
@@ -159,7 +159,7 @@ public class HandleSensors {
                 .filter(sensor -> this.timerMap.containsKey(sensor.getName()))
                 .filter(sensor -> !timerMap.get(sensor.getName()).isNotCounting())
                 .filter(sensor -> !sensor.compare(this.carStatus.get(sensor.getName())))
-                .forEach(sensor -> timerMap.get(sensor.getName()).stopTimer(sensor.getName()));
+                .forEach(sensor -> timerMap.get(sensor.getName()).stopTimer());
     }
 
     @Override
@@ -173,7 +173,7 @@ public class HandleSensors {
     private String addTimeJson(String input){
         /*Soluzione temporanea prima di universalizzare*/
         StringBuilder add =
-                new StringBuilder("{\"Hour\": " + 27 + ",");
+                new StringBuilder("{\"Hour\": " + raceTimeElapsed.getTimerMillis() + ",");
         add.append(input.substring(1));
         return add.toString();
     }
